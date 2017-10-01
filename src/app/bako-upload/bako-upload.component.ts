@@ -1,6 +1,6 @@
 import { Component, OnInit,
   ViewChild, EventEmitter,
-  Directive, ChangeDetectorRef } from '@angular/core';
+  Directive, ChangeDetectorRef, Input } from '@angular/core';
 import { Observable } from "rxjs/Rx";
 import { FileUploadService, ProgressService } from '../services-barrel';
 
@@ -11,10 +11,14 @@ import { FileUploadService, ProgressService } from '../services-barrel';
     styleUrls: ['bako-upload.component.scss']
 })
 export class BakoUploadComponent {
+
+  @Input() uploadRoute: string;
+
   uploadedFiles = [];
   uploadError;
   currentStatus: number;
-  uploadFieldName = 'photos';
+  uploadFieldName = 'myfiles';
+  //uploadRoute: string;
   filesAdded: any[] = [];
   progress: any;
   speed: any;
@@ -32,6 +36,8 @@ export class BakoUploadComponent {
   ) {
       this.reset(); // set initial state
 
+      //var test = this.uploadRoute;
+
       this._progressService.progressEvent$.subscribe((event) => {
           console.log('event progress', event)
           this.progress = event.percentCompleted;
@@ -44,7 +50,7 @@ export class BakoUploadComponent {
   }
 
   ngOnInit() {
-
+    //console.log('init', this.uploadRoute);
   }
 
 
@@ -55,7 +61,7 @@ export class BakoUploadComponent {
   }
 
   //https://devblog.dymel.pl/2016/09/02/upload-file-image-angular2-aspnetcore/
-  @ViewChild("photos") fileInput;
+  @ViewChild("myfiles") fileInput;
 
   update() {
       this.fileToUpload.progress = this.progress;
@@ -77,7 +83,7 @@ export class BakoUploadComponent {
 
           if (this.outputFiles.length === 0) {
               this.outputFiles = Object.keys(fi.files).map(function (key) {
-                  return fi.files[key]; //{ type: key, name: fi.files[key] };
+                  return fi.files[key];
               });
           }
 
@@ -90,7 +96,9 @@ export class BakoUploadComponent {
 
           this.filesAdded.push(this.fileToUpload);
 
-          this._svc.upload(this.fileToUpload)
+          //console.log('upload route', this.uploadRoute);
+
+          this._svc.upload(this.uploadRoute, this.fileToUpload)
               .subscribe(event => {
                   console.log('event', event);
                   this.uploadedFiles = [].concat(event);

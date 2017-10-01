@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n    <h1>\n        Welcome to {{title}}!\n    </h1>\n    <img width=\"300\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\n</div>\n<div>\n    <bako-upload></bako-upload>\n</div>\n<h2>Here are some links to help you start: </h2>\n<ul>\n    <li>\n        <h2><a target=\"_blank\" href=\"https://angular.io/tutorial\">Tour of Heroes</a></h2>\n    </li>\n    <li>\n        <h2><a target=\"_blank\" href=\"https://github.com/angular/angular-cli/wiki\">CLI Documentation</a></h2>\n    </li>\n    <li>\n        <h2><a target=\"_blank\" href=\"https://blog.angular.io/\">Angular blog</a></h2>\n    </li>\n</ul>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n    <h1>\n        Welcome to {{title}}!\n    </h1>\n    <img width=\"300\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\n</div>\n<div>\n    <bako-upload [uploadRoute]=\"uploadRoute\"></bako-upload>\n</div>\n<h2>Here are some links to help you start: </h2>\n<ul>\n    <li>\n        <h2><a target=\"_blank\" href=\"https://angular.io/tutorial\">Tour of Heroes</a></h2>\n    </li>\n    <li>\n        <h2><a target=\"_blank\" href=\"https://github.com/angular/angular-cli/wiki\">CLI Documentation</a></h2>\n    </li>\n    <li>\n        <h2><a target=\"_blank\" href=\"https://blog.angular.io/\">Angular blog</a></h2>\n    </li>\n</ul>"
 
 /***/ }),
 
@@ -58,6 +58,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var AppComponent = (function () {
     function AppComponent() {
         this.title = 'app';
+        this.uploadRoute = 'api/upload';
     }
     return AppComponent;
 }());
@@ -132,7 +133,7 @@ AppModule = __decorate([
 /***/ "../../../../../src/app/bako-upload/bako-upload.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n    <!--UPLOAD-->\n    <form #f=\"ngForm\" enctype=\"multipart/form-data\" novalidate *ngIf=\"currentStatus === STATUS_INITIAL || currentStatus === STATUS_SAVING\">\n        <h1>Upload images</h1>\n\n        <div *ngFor=\"let file of filesAdded\">\n            {{file.name}}<br />\n\n            <div>\n                <div class=\"progress\">\n                    <div class=\"progress-bar progress-bar-striped\" role=\"progressbar\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\" [ngStyle]=\"{'width': file.progress+'%'}\">\n                        {{file.progress}}%\n                    </div>\n                </div>\n            </div>\n\n        </div>\n\n        <br />\n        <div class=\"dropbox\">\n            <input type=\"file\" multiple [name]=\"uploadFieldName\" (change)=\"save()\" [disabled]=\"currentStatus === STATUS_SAVING\" #photos>\n            <p *ngIf=\"currentStatus === STATUS_INITIAL\">\n                Drag your file(s) here to begin<br> or click to browse\n            </p>\n            <p *ngIf=\"currentStatus === STATUS_SAVING\">\n                Uploading {{ photos.files.length }} files...\n            </p>\n        </div>\n    </form>\n</div>"
+module.exports = "<div>\n    <!--UPLOAD-->\n    <form #f=\"ngForm\" enctype=\"multipart/form-data\" novalidate *ngIf=\"currentStatus === STATUS_INITIAL || currentStatus === STATUS_SAVING\">\n        <h1>Upload images</h1>\n\n        <div class=\"dropbox\">\n            <input type=\"file\" multiple [name]=\"uploadFieldName\" (change)=\"save()\" [disabled]=\"currentStatus === STATUS_SAVING\" #myfiles>\n            <p *ngIf=\"currentStatus === STATUS_INITIAL\">\n                Drag your file(s) here to begin<br> or click to browse\n            </p>\n            <p *ngIf=\"currentStatus === STATUS_SAVING\">\n                Uploading {{ myfiles.files.length }} files...\n            </p>\n        </div>\n    </form>\n\n    <div *ngFor=\"let file of filesAdded\">\n        <div>\n            <span><b>{{file.name}}</b></span>\n            <div class=\"progress\">\n                <div class=\"progress-bar progress-bar-striped\" role=\"progressbar\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\" [ngStyle]=\"{'width': file.progress+'%'}\">\n                    {{file.progress}}%\n                </div>\n            </div>\n        </div>\n\n    </div>\n\n</div>"
 
 /***/ }),
 
@@ -144,7 +145,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".dropbox {\n  outline: 2px dashed grey;\n  /* the dash box */\n  outline-offset: -10px;\n  background: lightcyan;\n  color: dimgray;\n  padding: 10px 10px;\n  min-height: 200px;\n  /* minimum height */\n  position: relative;\n  cursor: pointer; }\n\n.dropbox:hover {\n  background: lightblue;\n  /* when mouse over to the drop zone, change color */ }\n\ninput[type=\"file\"] {\n  opacity: 0;\n  /* invisible but it's there! */\n  width: 100%;\n  height: 200px;\n  position: absolute;\n  cursor: pointer; }\n\n.dropbox p {\n  font-size: 1.2em;\n  text-align: center;\n  padding: 50px 0; }\n\n.uploaded {\n  padding: 0;\n  height: 14px;\n  border-radius: 10px;\n  background-image: -webkit-gradient(linear, left top, left bottom, from(#66cc00), to(#4b9500));\n  -o-border-image: initial;\n     border-image: initial; }\n", ""]);
+exports.push([module.i, ".dropbox {\n  outline: 2px dashed grey;\n  outline-offset: -10px;\n  background: lightcyan;\n  color: dimgray;\n  position: relative;\n  cursor: pointer; }\n\n.dropbox:hover {\n  background: lightblue;\n  /* when mouse over to the drop zone, change color */ }\n\ninput[type=\"file\"] {\n  opacity: 0;\n  /* invisible but it's there! */\n  width: 100%;\n  height: 200px;\n  position: absolute;\n  cursor: pointer; }\n\n.dropbox p {\n  font-size: 1.2em;\n  text-align: center;\n  padding: 50px 0; }\n\n.uploaded {\n  padding: 0;\n  height: 14px;\n  border-radius: 10px;\n  background-image: -webkit-gradient(linear, left top, left bottom, from(#66cc00), to(#4b9500));\n  -o-border-image: initial;\n     border-image: initial; }\n", ""]);
 
 // exports
 
@@ -182,7 +183,8 @@ var BakoUploadComponent = (function () {
         this._progressService = _progressService;
         this.cdr = cdr;
         this.uploadedFiles = [];
-        this.uploadFieldName = 'photos';
+        this.uploadFieldName = 'myfiles';
+        //uploadRoute: string;
         this.filesAdded = [];
         this.STATUS_INITIAL = 0;
         this.STATUS_SAVING = 1;
@@ -190,6 +192,7 @@ var BakoUploadComponent = (function () {
         this.STATUS_FAILED = 3;
         this.outputFiles = [];
         this.reset(); // set initial state
+        //var test = this.uploadRoute;
         this._progressService.progressEvent$.subscribe(function (event) {
             console.log('event progress', event);
             _this.progress = event.percentCompleted;
@@ -200,6 +203,7 @@ var BakoUploadComponent = (function () {
         });
     }
     BakoUploadComponent.prototype.ngOnInit = function () {
+        //console.log('init', this.uploadRoute);
     };
     BakoUploadComponent.prototype.reset = function () {
         this.currentStatus = this.STATUS_INITIAL;
@@ -220,7 +224,7 @@ var BakoUploadComponent = (function () {
             console.log('fi.files', fi.files);
             if (this.outputFiles.length === 0) {
                 this.outputFiles = Object.keys(fi.files).map(function (key) {
-                    return fi.files[key]; //{ type: key, name: fi.files[key] };
+                    return fi.files[key];
                 });
             }
             console.log('after outputFiles', this.outputFiles);
@@ -228,7 +232,8 @@ var BakoUploadComponent = (function () {
             this.fileToUpload.progress = 0;
             console.log('fileToUpload', this.fileToUpload);
             this.filesAdded.push(this.fileToUpload);
-            this._svc.upload(this.fileToUpload)
+            //console.log('upload route', this.uploadRoute);
+            this._svc.upload(this.uploadRoute, this.fileToUpload)
                 .subscribe(function (event) {
                 console.log('event', event);
                 _this.uploadedFiles = [].concat(event);
@@ -253,7 +258,11 @@ var BakoUploadComponent = (function () {
     return BakoUploadComponent;
 }());
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])("photos"),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", String)
+], BakoUploadComponent.prototype, "uploadRoute", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])("myfiles"),
     __metadata("design:type", Object)
 ], BakoUploadComponent.prototype, "fileInput", void 0);
 BakoUploadComponent = __decorate([
@@ -438,12 +447,10 @@ var FileUploadService = (function () {
         this._http = _http;
         this.baseUrl = ''; // our local Hapi Js API
     }
-    FileUploadService.prototype.upload = function (fileToUpload) {
-        //let headers = new Headers({ 'Content-Type': 'multipart/form-data' });
-        //let options = new RequestOptions({ headers: headers });
+    FileUploadService.prototype.upload = function (route, fileToUpload) {
         var input = new FormData();
         input.append("file", fileToUpload);
-        return this._http.post("api/upload", input, {})
+        return this._http.post(route, input, {})
             .map(this.extractData)
             .catch(this._handlerError.bind(this));
     };

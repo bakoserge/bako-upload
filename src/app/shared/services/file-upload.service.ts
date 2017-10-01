@@ -9,18 +9,14 @@ export class FileUploadService {
 
     baseUrl = ''; // our local Hapi Js API
 
-    constructor(private _http: Http,
-    //    private _httpClient: HttpClient
-    ) { }
+    constructor(private _http: Http) { }
 
-    upload(fileToUpload: any) {
-        //let headers = new Headers({ 'Content-Type': 'multipart/form-data' });
-        //let options = new RequestOptions({ headers: headers });
+    upload(route: string,fileToUpload: any) {
 
         let input = new FormData();
         input.append("file", fileToUpload);
 
-        return this._http.post("api/upload", input, {
+        return this._http.post(route, input, {
 
         })
         .map(this.extractData)
